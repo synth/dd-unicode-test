@@ -12,8 +12,11 @@ export LC_ALL=en_US.UTF-8
 locale
 
 echo $var1 $var2
+
+# First test case that causes failure in subprocess.pOpen
 dogwrap -n 'TestDDUnicode' -k $DataDogAPIKey --submit_mode all "echo 'Starting Unicode Test' && bash -c 'ruby -e \"puts $var1, $var2 \"' && echo 'Completed DD Unicode Test'"
 
+# Second test case that I can't get to work correctly
 # dogwrap -n 'TestDDUnicode' -k $DataDogAPIKey --submit_mode all "echo 'Starting Unicode Test' && ruby ruby_unicode.rb && echo 'Completed DD Unicode Test'"
 
 echo "Finished Test DD Unicode Script"
