@@ -1,0 +1,19 @@
+var1="Mich\xc3\xa9lle"
+var2="helløøééé"
+
+echo "Running Test DD Unicode Script"
+apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs python-pip locales && pip install git+https://github.com/datadog/datadogpy.git@master
+
+sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && locale-gen
+export LANG=en_US.UTF-8 
+export LANGUAGE=en_US:en  
+export LC_ALL=en_US.UTF-8 
+
+locale
+
+echo $var1 $var2
+dogwrap -n 'TestDDUnicode' -k $DataDogAPIKey --submit_mode all "echo 'Starting Unicode Test' && bash -c 'ruby -e \"puts $var1, $var2 \"' && echo 'Completed DD Unicode Test'"
+
+# dogwrap -n 'TestDDUnicode' -k $DataDogAPIKey --submit_mode all "echo 'Starting Unicode Test' && ruby ruby_unicode.rb && echo 'Completed DD Unicode Test'"
+
+echo "Finished Test DD Unicode Script"
